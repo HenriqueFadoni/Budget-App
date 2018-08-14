@@ -220,6 +220,15 @@ var controller = (function(budgetCtrl, UICtrl){
         document.querySelector(DOM.container).addEventListener('click', ctrlDeleteItem);
     };
 
+    var updatePercentages = function () {
+
+        //1. Calculate percentages
+
+        //2. Read percentages from the budget controller
+
+        //3. Update the UI with the new percentages
+
+    };
     
     var updateBudget = function() {
 
@@ -252,6 +261,9 @@ var controller = (function(budgetCtrl, UICtrl){
 
             // 8. Calculate and update buget
             updateBudget();
+
+            // 9. Calculate and update percentages
+            updatePercentages();
         }  
     };
 
@@ -274,6 +286,9 @@ var controller = (function(budgetCtrl, UICtrl){
 
             //3. update and show the new budget
             updateBudget();
+
+            //4. Calculate and update percentages
+            updatePercentages();
         }
 
     };

@@ -171,6 +171,13 @@ var UIController = (function(){
         return  (type === 'exp' ? '-' : '+')  + ' ' + int + '.' + dec;
 
     };
+
+    var nodeListForEach = function(list, callback){
+        for (var i = 0; i < list.length; i++){
+            callback(list[i], i);
+        }
+    };
+
     return {
         getinput: function () {
             return {
@@ -248,12 +255,6 @@ var UIController = (function(){
             
             fields = document.querySelectorAll(DOMstrings.expensesPercLabel);
 
-            var nodeListForEach = function(list, callback){
-                for (var i = 0; i < list.length; i++){
-                    callback(list[i], i);
-                }
-            };
-
             nodeListForEach(fields, function(current, index){
                 if (percentages[index] > 0){
                     current.textContent = percentages[index] + '%';
@@ -272,6 +273,21 @@ var UIController = (function(){
             month = now.getMonth();
             year = now.getFullYear();
             document.querySelector(DOMstrings.dateLabel).textContent = months[month] + ' ' + year;
+        },
+
+        changedType: function(){
+
+            var fields = document.querySelectorAll(
+                DOMstrings.inputType, + ',' +
+                DOMstrings.inputDescription + ',' +
+                DOMstrings.inputValue
+            );
+
+            nodeListForEach(fields, function(cur){
+                cur.classList.toggle('red-focus');
+            });
+
+            document.querySelector(DOMstrings.inputButton).classList.toggle('red');
         },
 
         getDOMstrings: function () {
@@ -293,10 +309,10 @@ var controller = (function(budgetCtrl, UICtrl){
             if (event.keyCode === 13 || event.which === 13){
                 ctrlAddItem();
             }
-
         });
-
         document.querySelector(DOM.container).addEventListener('click', ctrlDeleteItem);
+
+        document.querySelector(DOM.inputType).addEventListener('change', UICtrl.changedType);
     };
 
     var updatePercentages = function () {
